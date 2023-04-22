@@ -10,7 +10,7 @@ def get_ip():
         Action: Gets the IP address and Hostname of the machine
         Output: Dictionary with keys Hostname and IP Address
     """
-    Hostname = socket.getHostname() 
+    Hostname = socket.gethostname() 
     IPAddr = socket.gethostbyname(Hostname)
     return {'Hostname': Hostname, 'IP Address': IPAddr}
 
@@ -46,5 +46,6 @@ def ports_open():
     
     return {'Open Ports': Open_Ports}
 
-if __name__ == '__main__':
-    print(ports_open())
+# if __name__ == "__main__" :
+#     print(ports_open())
+    

@@ -110,7 +110,6 @@ def check_closed_ports(ports, openports):
 
     return closed_ports
 
-
 network_ip = {"Network IP Address": get_network_ip()}
 
 net_ip = {"Network Part of IP (/24)": use_network_ip()}
