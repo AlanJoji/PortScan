@@ -1,6 +1,6 @@
 import streamlit as st
 from host_scan import *
-#from lan_scan import *
+from lan_scan import *
 
 if __name__ == "__main__" :
     st.title("Security Operations Center - Port Scanner Application")
@@ -19,7 +19,6 @@ if __name__ == "__main__" :
     st.table(ip_dictionary)
     st.table(local_ports)
 
-
     st.markdown( """ 
     # Network Scanning 
     ## Features
@@ -27,5 +26,6 @@ if __name__ == "__main__" :
     - Finds the _Open and Closed_ ports of the Machines connected to the LAN
     """, True)
 
+    lan_ports = open_closed_ports()
 
-
+    st.table(lan_ports)

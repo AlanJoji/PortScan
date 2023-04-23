@@ -1,7 +1,8 @@
-import os
 import socket
-import subprocess
 import ping3
+
+port_list = [21, 22, 23, 25, 53, 80, 110, 119, 123, 143, 161, 194, 443, 445, 587, 993, 995, 1723, 3306, 3389, 5900, 8080]
+
 
 def get_network_ip():
     '''
@@ -10,7 +11,7 @@ def get_network_ip():
         Output: IP address of the host machine's network, as a string
     '''
     ip = socket.gethostbyname(socket.gethostname())
-    return '.'.join(ip.split('.'))
+    return {'Network IP Address': '.'.join(ip.split('.'))}
 
 
 
@@ -21,7 +22,7 @@ def use_network_ip():
         Output: Network part of IP address (/24) of the host machine's network, as a string
     '''
     ip = socket.gethostbyname(socket.gethostname())
-    return '.'.join(ip.split('.')[:-1])
+    return {'Network Part of IP (/24)': '.'.join(ip.split('.')[:-1])}
 
 
 
@@ -46,6 +47,7 @@ def check_active_ip(ip):
     """
 
     response = ping3.ping(ip, timeout=1)
+
     if response is not None:
         return True
     else:
@@ -66,7 +68,7 @@ def scan_network(network):
         if check_active_ip(ip):
             active_ips.append(ip)
 
-    return active_ips
+    return {'Active IP Addresses': active_ips}
 
 
 
@@ -92,7 +94,8 @@ def check_open_ports(ip, ports):
         except:
             pass
 
-    return open_ports
+    return {'Open Ports': open_ports}
+
 
 
 def check_closed_ports(ports, openports):
@@ -108,16 +111,30 @@ def check_closed_ports(ports, openports):
         if port not in openports["Open Ports"]:
             closed_ports.append(port)
 
-    return closed_ports
+    return {'Closed Ports': closed_ports}
 
-network_ip = {"Network IP Address": get_network_ip()}
 
-net_ip = {"Network Part of IP (/24)": use_network_ip()}
 
-active_ips = {"Active IP Addresses": scan_network(net_ip)}
-    
-port_list = [21, 22, 23, 25, 53, 80, 110, 119, 123, 143, 161, 194, 443, 445, 587, 993, 995, 1723, 3306, 3389, 5900, 8080]
-    
-for ip in active_ips["Active IP Addresses"]:
-    open_ports = {"Open Ports": check_open_ports(ip, port_list)}
-    closed_ports = {"Closed Ports": check_closed_ports(port_list, open_ports)}
+def open_closed_ports():
+    """
+        Input: None
+        Action: Produces the All {IP + Open & Closed Ports} as a dictionary
+        Output: Dictionary of Open and Closed Ports
+    """
+    network_ip = get_network_ip()
+
+    net_ip = use_network_ip()
+
+    active_ips = scan_network(net_ip)
+
+    open_closed_ports = {}
+
+    for ip in active_ips['Active IP Addresses']:
+        open_ports = check_open_ports(ip, port_list)
+        closed_ports = check_closed_ports(port_list, open_ports)
+        open_closed_ports[ip] = {'Open': open_ports['Open Ports'], 'Closed': closed_ports['Closed Ports']}
+
+    return open_closed_ports
+
+# result = open_closed_ports()
+# print(result)
