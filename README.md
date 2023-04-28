@@ -3,8 +3,8 @@
 
 ## Components
 **TCP Port Scanner**
-- Local Host Port Scanning
-- LAN IP and Port Scanning
+- **Local Host Port Scanning**
+- **LAN IP and Port Scanning**
 
 ## Features
 
