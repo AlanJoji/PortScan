@@ -14,12 +14,6 @@ The implemented as streamlit web application that runs on the localhost.
 - ***Multi-threading*** used to make the finding ports on the localhost more faster.
 2. The machine performs a ***ping sweep*** as well as a *SYN* and ***FIN*** scan to find the IP address of all the devices and the set of vulnerable ports located on their machines.
 
-## Output
-
-
-<img src="images/localhost.jpeg" width="500" title="LocalHost">
-<img src="images/network.jpeg" width="500" title="LAN">
-
 
 ## Tech Stack
 
